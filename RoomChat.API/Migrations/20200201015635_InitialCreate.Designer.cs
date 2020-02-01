@@ -9,7 +9,7 @@ using RoomChat.API.Data;
 namespace RoomChat.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200130031844_InitialCreate")]
+    [Migration("20200201015635_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
