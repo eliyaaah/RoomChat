@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using RoomChat.API.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RoomChat.API.Controllers
 {
+    [Authorize] //request has to be authorized to reach inside contoller
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -29,6 +31,7 @@ namespace RoomChat.API.Controllers
         }
 
         // GET api/values/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValue(int id)
         {
