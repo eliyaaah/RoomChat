@@ -9,5 +9,6 @@ namespace RoomChat.API.Data
 
         public DbSet<Value> Values { get; set; }  //scuffolded table will get this name
         public DbSet<User> Users { get; set; }
+        public DbSet<Photo> Photos { get; set; }
     }
 }
