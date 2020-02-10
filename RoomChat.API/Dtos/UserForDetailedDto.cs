@@ -1,20 +1,20 @@
 using System;
 using System.Collections.Generic;
+using RoomChat.API.Models;
 
-namespace RoomChat.API.Models
+namespace RoomChat.API.Dtos
 {
-    public class User
+    public class UserForDetailedDto
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
         public string DisplayName { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
         public string Description { get; set; }
         public string Company { get; set; }
         public string Location { get; set; }
-        public ICollection<Photo> Photos { get; set; }
+        public string PhotoUrl { get; set; }
+        public ICollection<PhotosForDetailedDto> Photos { get; set; }
     }
 }

@@ -19,6 +19,7 @@ using System.Net;
 using RoomChat.API.Helpers;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
 
 namespace RoomChat.API
 {
@@ -35,10 +36,16 @@ namespace RoomChat.API
         public void ConfigureServices(IServiceCollection services)
         {
             //get "DefaultConnection" connection string from appsettings.json
-            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers(); //injecting services
+            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration
+                .GetConnectionString("DefaultConnection")));
+            services.AddControllers().AddNewtonsoftJson(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            }); //injecting services
             services.AddCors();
+            services.AddAutoMapper(typeof(UserRepository).Assembly);
             services.AddScoped<IAuthRepository, AuthRepository>(); //inject service into controllers
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) //adding authentication middleware
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters
