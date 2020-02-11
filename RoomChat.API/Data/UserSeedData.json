@@ -10,7 +10,7 @@
       "Location": "Newcastle",
       "Photos": [
         {
-          "url": "https://randomuser.me/api/portraits/65.jpg",
+          "url": "https://randomuser.me/api/portraits/women/65.jpg",
           "isMain": true,
           "DateAdded": "2017-02-15"
         }
@@ -27,7 +27,7 @@
       "Location": "Washington",
       "Photos": [
         {
-          "url": "https://randomuser.me/api/portraits/6.jpg",
+          "url": "https://randomuser.me/api/portraits/men/6.jpg",
           "isMain": true,
           "DateAdded": "2017-08-20"
         }
@@ -44,7 +44,7 @@
       "Location": "Gulf",
       "Photos": [
         {
-          "url": "https://randomuser.me/api/portraits/12.jpg",
+          "url": "https://randomuser.me/api/portraits/men/12.jpg",
           "isMain": true,
           "DateAdded": "2017-07-03"
         }
@@ -61,7 +61,7 @@
       "Location": "Machias",
       "Photos": [
         {
-          "url": "https://randomuser.me/api/portraits/73.jpg",
+          "url": "https://randomuser.me/api/portraits/women/73.jpg",
           "isMain": true,
           "DateAdded": "2017-08-23"
         }
@@ -78,7 +78,7 @@
       "Location": "Ticonderoga",
       "Photos": [
         {
-          "url": "https://randomuser.me/api/portraits/59.jpg",
+          "url": "https://randomuser.me/api/portraits/men/59.jpg",
           "isMain": true,
           "DateAdded": "2017-05-01"
         }
@@ -95,7 +95,7 @@
       "Location": "Sylvanite",
       "Photos": [
         {
-          "url": "https://randomuser.me/api/portraits/3.jpg",
+          "url": "https://randomuser.me/api/portraits/women/3.jpg",
           "isMain": true,
           "DateAdded": "2017-01-09"
         }
@@ -112,7 +112,7 @@
       "Location": "Veguita",
       "Photos": [
         {
-          "url": "https://randomuser.me/api/portraits/1.jpg",
+          "url": "https://randomuser.me/api/portraits/men/1.jpg",
           "isMain": true,
           "DateAdded": "2017-08-16"
         }
@@ -129,7 +129,7 @@
       "Location": "Belgreen",
       "Photos": [
         {
-          "url": "https://randomuser.me/api/portraits/85.jpg",
+          "url": "https://randomuser.me/api/portraits/men/85.jpg",
           "isMain": true,
           "DateAdded": "2017-03-01"
         }
@@ -146,7 +146,7 @@
       "Location": "Bainbridge",
       "Photos": [
         {
-          "url": "https://randomuser.me/api/portraits/79.jpg",
+          "url": "https://randomuser.me/api/portraits/women/79.jpg",
           "isMain": true,
           "DateAdded": "2017-08-21"
         }
@@ -163,7 +163,7 @@
       "Location": "Greer",
       "Photos": [
         {
-          "url": "https://randomuser.me/api/portraits/41.jpg",
+          "url": "https://randomuser.me/api/portraits/men/41.jpg",
           "isMain": true,
           "DateAdded": "2017-08-12"
         }
