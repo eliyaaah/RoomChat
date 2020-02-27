@@ -49,8 +49,9 @@
                         <p>Connections will go here</p>
                     </tab>
                     <tab heading="Photos">
-                        <h4>Photos</h4>
-                        <p>Photos will go here</p>
+                        <div class="gallery-wrapper">
+                            <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+                        </div>
                     </tab>
                 </tabset>
             </div>
