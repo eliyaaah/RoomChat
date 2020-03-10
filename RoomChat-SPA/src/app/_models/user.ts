@@ -8,7 +8,7 @@ export interface User {
     lastActive: Date;
     company: string;
     location: string;
-    photoUrl: string;
+    photoUrl?: string;
     description?: string;
     photos?: Photo[];
 }
