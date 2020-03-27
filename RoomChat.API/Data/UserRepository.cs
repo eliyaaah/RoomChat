@@ -46,7 +46,32 @@ namespace RoomChat.API.Data
 
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            var users = _context.Users.Include(p => p.Photos);
+            var users = _context.Users.Include(p => p.Photos).OrderByDescending(u => u.LastActive).AsQueryable();
+
+            users = users.Where(u => u.Id != userParams.UserId);
+
+            if (!string.IsNullOrEmpty(userParams.Company))
+            {
+                users = users.Where(u => u.Company == userParams.Company);
+            }
+
+            if (!string.IsNullOrEmpty(userParams.Location))
+            {
+                users = users.Where(u => u.Location == userParams.Location);
+            }
+
+            if (!string.IsNullOrEmpty(userParams.OrderBy))
+            {
+                switch(userParams.OrderBy)
+                {
+                    case "created": 
+                        users = users.OrderByDescending(u => u.Created);
+                        break;
+                    default:
+                        users =users.OrderByDescending(u => u.LastActive);
+                        break;
+                }
+            }
 
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }

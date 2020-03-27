@@ -3,6 +3,7 @@ import { User } from '../../_models/user';
 import { UserService } from '../../_services/user.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
+import { Pagination, PaginatedResult } from 'src/app/_models/pagination';
 
 @Component({
   selector: 'app-member-list',
@@ -11,6 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MemberListComponent implements OnInit {
   users: User[];
+  user: User = JSON.parse(localStorage.getItem('user'));
+  userParams: any = {};
+  pagination: Pagination;
 
   constructor(private userService: UserService,
               private alertify: AlertifyService,
@@ -18,17 +22,34 @@ export class MemberListComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      // tslint:disable-next-line: no-string-literal
       this.users = data['users'].result;
+      this.pagination = data['users'].pagination;
     });
+
+    this.userParams.company = this.user.company;
+    this.userParams.location = this.user.location;
+    this.userParams.orderBy = 'lastActive';
   }
 
-  // loadUsers() {
-  //   this.userService.getUsers().subscribe((users: User[]) => {
-  //     this.users = users;
-  //   }, error => {
-  //     this.alertify.error(error);
-  //   });
-  // }
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.loadUsers();
+  }
+
+  resetFilters() {
+    this.userParams.company = this.user.company;
+    this.userParams.location = this.user.location;
+    this.loadUsers();
+  }
+
+  loadUsers() {
+    this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams)
+      .subscribe((res: PaginatedResult<User[]>) => {
+      this.users = res.result;
+      this.pagination = res.pagination;
+    }, error => {
+      this.alertify.error(error);
+    });
+  }
 
 }

@@ -10,6 +10,10 @@ namespace RoomChat.API.Helpers
             get { return pageSize; }
             set { pageSize = (value > MaxPageSize) ? MaxPageSize : value; }
         }
-        
+
+        public int UserId { get; set; }
+        public string Company { get; set; }
+        public string Location { get; set; }
+        public string OrderBy { get; set; }
     }
 }
