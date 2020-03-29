@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using RoomChat.API.Data;
 using RoomChat.API.Dtos;
 using RoomChat.API.Helpers;
+using RoomChat.API.Models;
 
 namespace RoomChat.API.Controllers
 {
@@ -35,15 +36,15 @@ namespace RoomChat.API.Controllers
 
             userParams.UserId = currentUserId;
             
-            if (string.IsNullOrEmpty(userParams.Company))
-            {
-                userParams.Company = userFromRepo.Company;
-            }
+            // if (string.IsNullOrEmpty(userParams.Company))
+            // {
+            //     userParams.Company = userFromRepo.Company;
+            // }
 
-            if (string.IsNullOrEmpty(userParams.Location))
-            {
-                userParams.Location = userFromRepo.Location;
-            }
+            // if (string.IsNullOrEmpty(userParams.Location))
+            // {
+            //     userParams.Location = userFromRepo.Location;
+            // }
 
             var users = await _repo.GetUsers(userParams);
 
@@ -80,6 +81,34 @@ namespace RoomChat.API.Controllers
                 return NoContent();
             
             throw new Exception($"Updating user {id} failed on save");
+        }
+
+        [HttpPost("{id}/connect/{recipientId}")]
+        public async Task<IActionResult> ConnectWithUser(int id, int recipientId)
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var connection = await _repo.GetConnectionRequest(id, recipientId);
+
+            if (connection != null)
+                return BadRequest("You have already sent the connection request to this user");
+            
+            if (await _repo.GetUser(recipientId) == null)
+                return NotFound();
+            
+            connection = new Connection
+            {
+                UserId1 = id,
+                UserId2 = recipientId
+            };
+
+            _repo.Add<Connection>(connection);
+
+            if (await _repo.SaveAll())
+                return Ok();
+
+            return BadRequest("Failed to send connection request");
         }
     }
 }

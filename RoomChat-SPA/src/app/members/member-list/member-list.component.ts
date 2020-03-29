@@ -26,8 +26,8 @@ export class MemberListComponent implements OnInit {
       this.pagination = data['users'].pagination;
     });
 
-    this.userParams.company = this.user.company;
-    this.userParams.location = this.user.location;
+    this.userParams.company = '';
+    this.userParams.location = '';
     this.userParams.orderBy = 'lastActive';
   }
 
@@ -37,8 +37,8 @@ export class MemberListComponent implements OnInit {
   }
 
   resetFilters() {
-    this.userParams.company = this.user.company;
-    this.userParams.location = this.user.location;
+    this.userParams.company = '';
+    this.userParams.location = '';
     this.loadUsers();
   }
 

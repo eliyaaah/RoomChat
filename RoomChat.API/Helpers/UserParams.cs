@@ -15,5 +15,7 @@ namespace RoomChat.API.Helpers
         public string Company { get; set; }
         public string Location { get; set; }
         public string OrderBy { get; set; }
+        public bool Connections { get; set; } = false;
+        public bool ConnectionRequests { get; set; } = false;
     }
 }

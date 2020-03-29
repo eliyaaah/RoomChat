@@ -16,5 +16,7 @@ namespace RoomChat.API.Models
         public string Company { get; set; }
         public string Location { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<Connection> ConnectionRequestsSent { get; set; }
+        public ICollection<Connection> ConnectionRequestsReceived { get; set; }
     }
 }

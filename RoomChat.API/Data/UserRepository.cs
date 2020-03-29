@@ -25,6 +25,11 @@ namespace RoomChat.API.Data
             _context.Remove(entity); // only will be saved in memory (not) until SaveAll() is executed
         }
 
+        public async Task<Connection> GetConnectionRequest(int userId, int recipientId)
+        {
+            return await _context.Connections.FirstOrDefaultAsync(u => u.UserId1 == userId && u.UserId2 == recipientId);
+        }
+
         public Task<Photo> GetMainPhotoForUser(int userId)
         {
             return _context.Photos.Where(u => u.UserId == userId).FirstOrDefaultAsync(p => p.IsMain);
@@ -60,6 +65,18 @@ namespace RoomChat.API.Data
                 users = users.Where(u => u.Location == userParams.Location);
             }
 
+            if(userParams.Connections)
+            {
+                var userConnections = await GetUserConnections(userParams.UserId, userParams.ConnectionRequests);
+                users = users.Where(u => userConnections.Contains(u.Id));
+            }
+
+            if(userParams.ConnectionRequests)
+            {
+                var userConnectionRequests = await GetUserConnections(userParams.UserId, userParams.ConnectionRequests);                
+                users = users.Where(u => userConnectionRequests.Contains(u.Id));
+            }
+
             if (!string.IsNullOrEmpty(userParams.OrderBy))
             {
                 switch(userParams.OrderBy)
@@ -74,6 +91,26 @@ namespace RoomChat.API.Data
             }
 
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
+        }
+
+        private async Task<IEnumerable<int>> GetUserConnections(int id, bool requestsReceived)
+        {
+            var user = await _context.Users.Include(x => x.ConnectionRequestsReceived).Include(x => x.ConnectionRequestsSent)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+
+            if (requestsReceived)
+            {
+                var userRequestsSent = user.ConnectionRequestsSent.Where(u => u.UserId1 == id).Select(i => i.UserId2);             
+                return user.ConnectionRequestsReceived.Where(u => u.UserId2 == id)
+                    .Where(u => !userRequestsSent.Any(u2 => u2 == u.UserId1)).Select(i => i.UserId1);
+            }
+            else
+            {
+                var userRequestsReceived = user.ConnectionRequestsReceived.Where(u => u.UserId2 == id).Select(i => i.UserId1);
+                return user.ConnectionRequestsSent.Where(u => u.UserId1 == id)
+                    .Where(u => userRequestsReceived.Any(u2 => u2 == u.UserId2)).Select(i => i.UserId2);
+            }
         }
 
         public async Task<bool> SaveAll()
