@@ -77,6 +77,12 @@ namespace RoomChat.API.Data
                 users = users.Where(u => userConnectionRequests.Contains(u.Id));
             }
 
+            if(!userParams.Connections && !userParams.ConnectionRequests)
+            {
+                var userConnections = await GetUserConnections(userParams.UserId, userParams.ConnectionRequests);
+                users = users.Where(u => !userConnections.Contains(u.Id));
+            }
+
             if (!string.IsNullOrEmpty(userParams.OrderBy))
             {
                 switch(userParams.OrderBy)
@@ -111,6 +117,16 @@ namespace RoomChat.API.Data
                 return user.ConnectionRequestsSent.Where(u => u.UserId1 == id)
                     .Where(u => userRequestsReceived.Any(u2 => u2 == u.UserId2)).Select(i => i.UserId2);
             }
+        }
+
+        public async Task<List<string>> GetCompanyList()
+        {
+            return await _context.Users.Select(s => s.Company).Distinct().ToListAsync();
+        }
+
+        public async Task<List<string>> GetLocationList()
+        {
+            return await _context.Users.Select(s => s.Location).Distinct().ToListAsync();
         }
 
         public async Task<bool> SaveAll()

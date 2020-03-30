@@ -110,5 +110,19 @@ namespace RoomChat.API.Controllers
 
             return BadRequest("Failed to send connection request");
         }
+
+        [HttpGet("companies")]
+        public async Task<IActionResult> GetCompanyList()
+        {
+            var companyList = await _repo.GetCompanyList();
+            return Ok(companyList);
+        }
+
+        [HttpGet("locations")]
+        public async Task<IActionResult> GetLocationList()
+        {
+            var locationList = await _repo.GetLocationList();
+            return Ok(locationList);
+        }
     }
 }

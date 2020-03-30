@@ -15,6 +15,8 @@ export class MemberListComponent implements OnInit {
   user: User = JSON.parse(localStorage.getItem('user'));
   userParams: any = {};
   pagination: Pagination;
+  companies: string[];
+  locations: string[];
 
   constructor(private userService: UserService,
               private alertify: AlertifyService,
@@ -24,6 +26,18 @@ export class MemberListComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.users = data['users'].result;
       this.pagination = data['users'].pagination;
+    });
+
+    this.userService.getCompanyList().subscribe((res: string[]) => {
+      this.companies = res;
+    }, error => {
+      this.alertify.error(error);
+    });
+
+    this.userService.getLocationList().subscribe((res: string[]) => {
+      this.locations = res;
+    }, error => {
+      this.alertify.error(error);
     });
 
     this.userParams.company = '';
@@ -37,10 +51,23 @@ export class MemberListComponent implements OnInit {
   }
 
   resetFilters() {
+    // this.userParams.company = this.user.company;
+    // this.userParams.location = this.user.location;
     this.userParams.company = '';
     this.userParams.location = '';
     this.loadUsers();
   }
+
+  companyChanged(company: string) {
+    this.userParams.company = company;
+    this.loadUsers();
+  }
+
+  locationChanged(location: string) {
+    this.userParams.location = location;
+    this.loadUsers();
+  }
+
 
   loadUsers() {
     this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams)

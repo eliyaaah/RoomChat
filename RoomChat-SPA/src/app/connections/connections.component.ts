@@ -32,12 +32,15 @@ export class ConnectionsComponent implements OnInit {
   loadUsers() {
     this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, null, this.connectionsParam)
       .subscribe((res: PaginatedResult<User[]>) => {
-      console.log(this.connectionsParam);
       this.users = res.result;
       this.pagination = res.pagination;
     }, error => {
       this.alertify.error(error);
     });
+  }
+
+  sendConnection() {
+    this.loadUsers();
   }
 
   pageChanged(event: any): void {

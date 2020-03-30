@@ -15,5 +15,7 @@ namespace RoomChat.API.Data
         Task<Photo> GetPhoto(int id);
         Task<Photo> GetMainPhotoForUser(int userId);
         Task<Connection> GetConnectionRequest(int userId, int recipientId);
+        Task<List<string>> GetCompanyList();
+        Task<List<string>> GetLocationList();
     }
 }

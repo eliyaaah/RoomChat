@@ -70,4 +70,12 @@ export class UserService {
   sendConnectionRequest(id: number, recipientId: number) {
     return this.http.post(this.baseUrl + 'users/' + id + '/connect/' + recipientId, {});
   }
+
+  getCompanyList() {
+    return this.http.get(this.baseUrl + 'users/' + 'companies');
+  }
+
+  getLocationList() {
+    return this.http.get(this.baseUrl + 'users/' + 'locations');
+  }
 }

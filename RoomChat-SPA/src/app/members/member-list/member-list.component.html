@@ -1,52 +1,56 @@
 <div class="text-center mt-3">
-    <h2>Your colleagues - {{pagination.totalItems}} found</h2>
-  </div>
+  <h2>Your colleagues - {{pagination.totalItems}} found</h2>
+</div>
 
 <div class="container mt-3">
-
-    <form class="form-inline" #form="ngForm" (ngSubmit)="loadUsers()" novalidate>
-        <div class="form-group">
-          <label for="location">Company:</label>
-          <input type="text" class="form-control ml-1" style="width: 200px" id="company" 
-            [(ngModel)]="userParams.company" name="company">
-        </div>
-      
-        <div class="form-group px-2">
-          <label for="location">Location:</label>
-          <input type="text" class="form-control ml-1" style="width: 200px" id="location" 
-            [(ngModel)]="userParams.location" name="location">
-        </div>
-      
-        <button type="submit" class="btn btn-primary" style="margin-left:10px">Apply Filters</button>
-        <button type="button" class="btn btn-info" style="margin-left:10px" (click)="resetFilters()">Reset Filter</button>
-        
-        <div class="col">
-            <div class="btn-group float-right">
-              <button type="button" name="orderBy" class="btn btn-primary" 
-                [(ngModel)]="userParams.orderBy" (click)="loadUsers()" btnRadio="lastActive">Last Active</button>
-              <button type="button" name="orderBy" class="btn btn-primary" 
-                [(ngModel)]="userParams.orderBy" (click)="loadUsers()" btnRadio="created">Newest Members</button>
-            </div>
-        </div>
-
-      </form>
-      <br>
-
-    <div class="row">
-        <div *ngFor="let user of users" class="col-lg-2 col-md-3 col-sm-6">
-            <app-member-card [user]="user"></app-member-card>
-        </div>
+  <div class="row">
+    <div class="btn-group mr-3" dropdown>
+      <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+        aria-controls="dropdown-basic">
+        {{userParams.company ? userParams.company : "Companies"}}<span class="caret"></span>
+      </button>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+        <li class="menuitem" *ngFor="let company of companies" role="menuitem"><a class="dropdown-item"
+            (click)="companyChanged(company)">{{company}}</a></li>
+      </ul>
     </div>
+
+    <div class="btn-group" dropdown>
+      <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+        aria-controls="dropdown-basic">
+        {{userParams.location ? userParams.location : "Locations"}}<span class="caret"></span>
+      </button>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+        <li class="menuitem" *ngFor="let location of locations" role="menuitem"><a class="dropdown-item"
+            (click)="locationChanged(location)">{{location}}</a></li>
+      </ul>
+    </div>
+
+    <button type="button" class="btn btn-info" style="margin-left:10px" (click)="resetFilters()">Reset Filter</button>
+
+    <div class="col">
+      <div class="btn-group float-right">
+        <button type="button" name="orderBy" class="btn btn-primary" [(ngModel)]="userParams.orderBy"
+          (click)="loadUsers()" btnRadio="lastActive">Last Active</button>
+        <button type="button" name="orderBy" class="btn btn-primary" [(ngModel)]="userParams.orderBy"
+          (click)="loadUsers()" btnRadio="created">Newest Members</button>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div *ngFor="let user of users" class="col-lg-2 col-md-3 col-sm-6">
+      <app-member-card [user]="user"></app-member-card>
+    </div>
+  </div>
 </div>
 
 
 
 <div class="d-flex justify-content-center">
-    <pagination [boundaryLinks]="true" 
-                [totalItems]="pagination.totalItems"
-                [(ngModel)]="pagination.currentPage"
-                [itemsPerPage]="pagination.itemsPerPage"
-                (pageChanged)="pageChanged($event)"
-        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
-    </pagination>
+  <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+    [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+    nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+  </pagination>
 </div>
