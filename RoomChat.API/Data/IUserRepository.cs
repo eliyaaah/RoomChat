@@ -18,7 +18,7 @@ namespace RoomChat.API.Data
         Task<List<string>> GetCompanyList();
         Task<List<string>> GetLocationList();
         Task<Message> GetMessage(int id);
-        Task<PagedList<Message>> GetMessagesForUser();
+        // Task<PagedList<Message>> GetMessagesForUser(MessageParams messageParams);
         Task<IEnumerable<Message>> GetMessageThread(int userId, int recipientId);
     }
 }
