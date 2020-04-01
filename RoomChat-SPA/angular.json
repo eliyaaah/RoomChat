@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "RoomChat-SPA"
+    }
+  },
+  "defaultProject": "RoomChat-SPA",
+  "cli": {
+    "analytics": false
+  }
 }
