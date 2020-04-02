@@ -33,6 +33,7 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { ConnectionsComponent } from './connections/connections.component';
 import { ConnectionsResolver } from './_resolvers/connections.resolver';
+import { MessagesResolver } from './_resolvers/messages.resolver';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -85,6 +86,7 @@ export function tokenGetter() {
       MemberEditResolver,
       ConnectionsResolver,
       PreventUnsavedChanges,
+      MessagesResolver
    ],
    bootstrap: [
       AppComponent
