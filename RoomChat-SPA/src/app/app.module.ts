@@ -34,6 +34,7 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 import { ConnectionsComponent } from './connections/connections.component';
 import { ConnectionsResolver } from './_resolvers/connections.resolver';
 import { MessagesResolver } from './_resolvers/messages.resolver';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -53,7 +54,8 @@ export function tokenGetter() {
       MemberDetailComponent,
       MemberEditComponent,
       PhotoEditorComponent,
-      ConnectionsComponent
+      ConnectionsComponent,
+      MemberMessagesComponent
    ],
    imports: [
       BrowserModule,
