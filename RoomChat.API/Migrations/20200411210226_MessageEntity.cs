@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RoomChat.API.Migrations
 {
-    public partial class MessageEntityAdded : Migration
+    public partial class MessageEntity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +19,8 @@ namespace RoomChat.API.Migrations
                     IsRead = table.Column<bool>(nullable: false),
                     DateRead = table.Column<DateTime>(nullable: true),
                     MessageSent = table.Column<DateTime>(nullable: true),
-                    Deleted = table.Column<bool>(nullable: false)
+                    RecipientDeleted = table.Column<bool>(nullable: false),
+                    SenderDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

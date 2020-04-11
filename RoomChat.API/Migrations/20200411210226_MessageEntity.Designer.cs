@@ -9,8 +9,8 @@ using RoomChat.API.Data;
 namespace RoomChat.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200331005941_MessageEntityAdded")]
-    partial class MessageEntityAdded
+    [Migration("20200411210226_MessageEntity")]
+    partial class MessageEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,16 +45,19 @@ namespace RoomChat.API.Migrations
                     b.Property<DateTime?>("DateRead")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("IsRead")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("MessageSent")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("RecipientDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("RecipientId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("SenderDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("SenderId")

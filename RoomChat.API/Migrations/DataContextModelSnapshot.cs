@@ -43,16 +43,19 @@ namespace RoomChat.API.Migrations
                     b.Property<DateTime?>("DateRead")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("IsRead")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("MessageSent")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("RecipientDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("RecipientId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("SenderDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("SenderId")
