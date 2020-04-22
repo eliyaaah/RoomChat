@@ -12,9 +12,13 @@ namespace RoomChat.API.Data
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Connection> Connections { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<RoomUser> RoomUser { get; set; }
+        public DbSet<MessageInRoom> MessagesInRoom { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            // Connection entity Fluent API config
             builder.Entity<Connection>()
                 .HasKey(k => new { k.UserId1, k.UserId2 });
             
@@ -29,7 +33,9 @@ namespace RoomChat.API.Data
                 .WithMany(u => u.ConnectionRequestsReceived)
                 .HasForeignKey(u => u.UserId2)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
+
+            // Message entity Fluent API config
             builder.Entity<Message>()
                 .HasOne(u => u.Sender)
                 .WithMany(m => m.MessagesSent)
@@ -39,6 +45,29 @@ namespace RoomChat.API.Data
                 .HasOne(u => u.Recipient)
                 .WithMany(m => m.MessagesReceived)
                 .OnDelete(DeleteBehavior.Restrict);
+            
+
+            // RoomUser entity Fluent API config
+            builder.Entity<RoomUser>()
+                .HasKey(ru => new { ru.UserId, ru.RoomId });
+
+            builder.Entity<RoomUser>()
+                .HasOne(ru => ru.User)
+                .WithMany(u => u.RoomUsers)
+                .HasForeignKey(u => u.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            builder.Entity<RoomUser>()
+                .HasOne(ru => ru.Room)
+                .WithMany(r => r.RoomUsers)
+                .HasForeignKey(r => r.RoomId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Fluent API config for MessagesInRoom and Rooms
+            builder.Entity<Room>()
+                .HasMany(r => r.MessagesInRoom)
+                .WithOne(m => m.Room)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

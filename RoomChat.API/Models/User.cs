@@ -20,5 +20,6 @@ namespace RoomChat.API.Models
         public ICollection<Connection> ConnectionRequestsReceived { get; set; }
         public ICollection<Message> MessagesSent { get; set; }
         public ICollection<Message> MessagesReceived { get; set; }
+        public ICollection<RoomUser> RoomUsers { get; set; }
     }
 }
