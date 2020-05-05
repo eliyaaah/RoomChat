@@ -47,6 +47,7 @@ namespace RoomChat.API
             services.AddAutoMapper(typeof(UserRepository).Assembly);
             services.AddScoped<IAuthRepository, AuthRepository>(); //inject service into controllers
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoomsRepository, RoomsRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) //adding authentication middleware
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters

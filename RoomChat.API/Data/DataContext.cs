@@ -55,13 +55,13 @@ namespace RoomChat.API.Data
                 .HasOne(ru => ru.User)
                 .WithMany(u => u.RoomUsers)
                 .HasForeignKey(u => u.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             
             builder.Entity<RoomUser>()
                 .HasOne(ru => ru.Room)
                 .WithMany(r => r.RoomUsers)
                 .HasForeignKey(r => r.RoomId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Fluent API config for MessagesInRoom and Rooms
             builder.Entity<Room>()

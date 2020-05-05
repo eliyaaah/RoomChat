@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace RoomChat.API.Models
 {
     public class RoomUser

@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
+using RoomChat.API.Models;
 
-namespace RoomChat.API.Models
+namespace RoomChat.API.Dtos
 {
-    public class Room
+    public class RoomForReturnDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int AdminId { get; set; }
         public DateTime DateCreated { get; set; }
-        public ICollection<RoomUser> RoomUsers { get; set; }
-        public ICollection<MessageInRoom> MessagesInRoom { get; set; }
     }
 }
