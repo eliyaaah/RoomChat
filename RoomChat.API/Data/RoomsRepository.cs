@@ -25,6 +25,10 @@ namespace RoomChat.API.Data
         {
             return await _context.Rooms.Include(r => r.RoomUsers).FirstOrDefaultAsync(r => r.Id == id);
         }
+        public void DeleteUserFromRoom(int userId, int roomId)
+        {
+            _context.Rooms.Find(roomId).RoomUsers.Remove(_context.RoomUser.Find(userId, roomId));
+        }
         public async Task<bool> SaveAll()
         {
             return await _context.SaveChangesAsync() > 0;

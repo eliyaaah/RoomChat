@@ -57,7 +57,7 @@ namespace RoomChat.API.Controllers
         [HttpGet("{id}", Name = "GetRoom")]
         public async Task<IActionResult> GetRoom(int id)
         {
-            var loggedInUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var loggedInUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             
             var roomFromRepo = await _repo.GetRoom(id);
 
@@ -66,7 +66,7 @@ namespace RoomChat.API.Controllers
             
             var roomForReturn = _mapper.Map<RoomForReturnDto>(roomFromRepo);
 
-            if ((roomFromRepo.RoomUsers.Any(ru => ru.UserId == loggedInUser)) && (roomFromRepo.AdminId != loggedInUser))
+            if ((!roomFromRepo.RoomUsers.Any(ru => ru.UserId == loggedInUserId)) && (roomFromRepo.AdminId != loggedInUserId))
                 return Unauthorized();
             
             return Ok(roomForReturn);
@@ -75,11 +75,11 @@ namespace RoomChat.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteRoom(int id)
         {
-            var loggedInUse = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var loggedInUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             
             var roomFromRepo = await _repo.GetRoom(id);
 
-            if (roomFromRepo.AdminId != loggedInUse)
+            if (roomFromRepo.AdminId != loggedInUserId)
                 return Unauthorized();
 
             _repo.Delete(roomFromRepo);
@@ -100,6 +100,9 @@ namespace RoomChat.API.Controllers
             if (roomFromRepo.AdminId != loggedInUserId)
                 return Unauthorized();
 
+            if (roomFromRepo.RoomUsers.Any(ru => ru.UserId == userId))
+                return BadRequest("User is already in this room");
+
             var roomUser = new RoomUser {
                 RoomId = roomId,
                 UserId = userId
@@ -111,6 +114,27 @@ namespace RoomChat.API.Controllers
                 return Ok();
 
             return BadRequest("Failed to add user to the room");
+        }
+
+        [HttpDelete("{roomId}/users")]
+        public async Task<IActionResult> DeleteUserFromRoom(int roomId, int userId)
+        {
+            var loggedInUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var roomFromRepo = await _repo.GetRoom(roomId);
+
+            if ((!roomFromRepo.RoomUsers.Any(ru => ru.UserId == loggedInUserId)) && (roomFromRepo.AdminId != loggedInUserId))
+                return Unauthorized();
+
+            if (roomFromRepo.AdminId == userId)
+                return BadRequest("Cannot remove admin from room");
+
+            _repo.DeleteUserFromRoom(userId, roomId);
+
+            if (await _repo.SaveAll())
+                return Ok();
+
+            return BadRequest("Failed to remove user to the room");
         }
     }
 }

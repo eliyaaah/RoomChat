@@ -9,5 +9,6 @@ namespace RoomChat.API.Data
         void Delete<T>(T entity) where T: class;
         Task<bool> SaveAll();   // will return true for saved changes; false for nothing to save
         Task<Room> GetRoom(int id);
+        void DeleteUserFromRoom(int userId, int roomId);
     }
 }
